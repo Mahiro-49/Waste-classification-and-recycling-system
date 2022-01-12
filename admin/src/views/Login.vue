@@ -24,7 +24,6 @@
                   v-model="registerData.password"
                 ></el-input>
               </el-form-item>
-              
             </el-form>
           </div>
           <button class="bbutton" @click="loginForm('registerForm')">
@@ -62,6 +61,17 @@
               <el-form-item label="邮箱" prop="email">
                 <el-input type="email" v-model="registerData.email"></el-input>
               </el-form-item>
+              <el-form-item label="身份" prop="isAdmin">
+                <el-select v-model="registerData.isAdmin" placeholder="请选择">
+                  <el-option
+                    v-for="item in select"
+                    :key="item"
+                    :label="item"
+                    :value="item"
+                  >
+                  </el-option>
+                </el-select>
+              </el-form-item>
             </el-form>
           </div>
           <button class="bbutton" @click="submitForm('registerForm')">
@@ -86,6 +96,7 @@
 </template>
 
 <script>
+
 export default {
   data() {
     var validatePass = (rule, value, callback) => {
@@ -97,12 +108,14 @@ export default {
     };
 
     return {
+      select: ['管理员', '用户'],
       isLogin: true,
       registerData: {
         username: "",
         password: "",
         password2: "",
         email: "",
+        isAdmin: '',
       },
       rules: {
         username: [
@@ -137,7 +150,6 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.$http.post("/register", this.registerData).then((res) => {
-            console.log(res.data);
             this.$message({
               type: "success",
               message: "用户注册成功",
@@ -154,7 +166,8 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.$http.post("/login", this.registerData).then((res) => {
-            localStorage.setItem("elementToken", "Bearer " + res.data);
+            // 将token保存在vuex中
+            this.$store.commit("saveToken", res.data);
             this.$router.push("/");
             this.$message({
               type: "success",
@@ -178,8 +191,8 @@ export default {
   box-sizing: border-box;
 }
 .contain {
-  width: 60%;
-  height: 60%;
+  width: 80%;
+  height: 80%;
   position: relative;
   top: 50%;
   left: 50%;
@@ -209,7 +222,7 @@ export default {
   font-size: 1.5em;
   font-weight: bold;
   color: rgb(57, 167, 176);
-	margin-bottom: 2rem;
+  margin-bottom: 2rem;
 }
 .bform {
   width: 100%;
@@ -247,6 +260,7 @@ export default {
   color: #fff;
   font-size: 0.9em;
   cursor: pointer;
+  margin-top: 2rem;
 }
 .small-box {
   width: 30%;
@@ -293,7 +307,7 @@ export default {
 }
 
 .sbutton:hover {
-	background-color:rgb(57, 167, 176)
+  background-color: rgb(57, 167, 176);
 }
 
 .big-box.active {

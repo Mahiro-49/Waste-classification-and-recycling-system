@@ -16,7 +16,7 @@
         <el-input style="width: 20rem" v-model="model.name"></el-input>
       </el-form-item>
       <el-form-item label="回收价格">
-        <el-input style="width: 20rem" v-model="model.name"></el-input>
+        <el-input style="width: 20rem" v-model="model.price"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" native-type="submit">保存</el-button>
@@ -32,8 +32,7 @@ export default {
   },
   data() {
     return {
-      model: {
-      },
+      model: {},
       parents: [],
     };
   },
@@ -47,28 +46,26 @@ export default {
     async save() {
       let res;
       if (this.id) {
-        res = await this.$http.put(`rest/items/${this.id}`, this.model);
+        res = await this.$http.put(`rest/goods/${this.id}`, this.model);
       } else {
-        res = await this.$http.post("rest/items", this.model);
+        res = await this.$http.post("rest/goods", this.model);
       }
-      this.$router.push("/items/list");
-      this.$message({
-        type: "success",
-        message: "保存成功",
-      });
+      this.$router.push("/goods/list");
+      if(res.data !== "没有权限") {
+        this.$message({
+          type: "success",
+          message: "保存成功",
+        });
+      }
     },
     async fetch() {
-      const res = await this.$http.get(`rest/items/${this.id}`);
+      const res = await this.$http.get(`rest/goods/${this.id}`);
       this.model = res.data;
     },
     async fetchParents() {
       const res = await this.$http.get(`rest/categories`);
       this.parents = res.data;
     },
-    afterUpload(res) {
-      console.log(res);
-      this.$set(this.model, 'icon', res.url);   // 显示赋值 在model上添加icon属性
-    }
   },
 };
 </script>

@@ -1,35 +1,40 @@
 <template>
   <el-container style="height: 100vh">
-    <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
-      <el-menu router :default-openeds="['1','2' ,'3']">
+    <el-aside width="200px">
+      <el-menu router :default-openeds="['1','2' , '4']">
         <el-submenu index="1">
           <template slot="title"
             ><i class="el-icon-message"></i>内容管理
           </template>
           <el-menu-item-group>
             <template slot="title">分类</template>
-            <el-menu-item index="/categories/create">新建分类</el-menu-item>
             <el-menu-item index="/categories/list">分类列表</el-menu-item>
           </el-menu-item-group>
           <el-menu-item-group>
             <template slot="title">垃圾</template>
-            <el-menu-item index="/items/create">新建垃圾</el-menu-item>
             <el-menu-item index="/items/list">垃圾列表</el-menu-item>
           </el-menu-item-group>
         </el-submenu>
         <el-submenu index="2">
           <template slot="title"><i class="el-icon-menu"></i>废品回收</template>
           <el-menu-item-group>
-            <el-menu-item index='/reuse/create'>新建项目</el-menu-item>
-            <el-menu-item index='/reuse/list'>回收列表</el-menu-item>
+            <template slot="title">价格</template>
+            <el-menu-item index='/goods/list'>价格列表</el-menu-item>
+          </el-menu-item-group>
+          <el-menu-item-group>
+            <template slot="title">地点</template>
+            <el-menu-item index='/locations/list'>回收地点</el-menu-item>
           </el-menu-item-group>
         </el-submenu>
-        <el-submenu index="3">
+        <el-submenu index="4">
           <template slot="title"
-            ><i class="el-icon-setting"></i>公益科普</template
+            ><i class="el-icon-setting"></i>用户管理</template
           >
           <el-menu-item-group>
-            <el-menu-item index="3-1">文章管理</el-menu-item>
+            <el-menu-item index="/users/personal">个人信息</el-menu-item>
+          </el-menu-item-group>
+          <el-menu-item-group>
+            <el-menu-item index="/users/list">账户列表</el-menu-item>
           </el-menu-item-group>
         </el-submenu>
       </el-menu>
@@ -38,14 +43,12 @@
     <el-container>
       <el-header style="text-align: right; font-size: 12px">
         <el-dropdown>
-          <i class="el-icon-setting" style="margin-right: 15px"></i>
+          <img class="header-img" src="../assets/bg2.png" alt="">
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>查看</el-dropdown-item>
-            <el-dropdown-item>新增</el-dropdown-item>
-            <el-dropdown-item>删除</el-dropdown-item>
+            <el-dropdown-item>查看个人信息</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
-        <span>王小虎</span>
+        <span class="name">欢迎您：admin</span>
       </el-header>
 
       <el-main>
@@ -57,23 +60,59 @@
 
 
 <script>
+import jwtDecode from "jwt-decode";
+
 export default {
   data() {
-    return {};
+    return {
+      token: null,
+      id: "",
+      items: {},
+    };
+  },
+  create() {
+    
   },
   beforeMount() {
-    this.$http.get("/getlist").then((res) => {
-      console.log(res.data);
-    });
+    // this.token = jwtDecode(this.$store.state.token);
+    // console.log(this.token._id);
+    // this.id = this.token._id;
+    // this.feathData();
   },
+  methods: {
+    async feathData() {
+      const res = await this.$http.get(`/getlist/${this.id}`);
+      this.items = res.data;
+    },
+  }
 };
 </script>
 
 <style>
+.el-container .el-main {
+  margin: 0;
+  padding: 0;
+}
+
+
 .el-header {
-  background-color: #b3c0d1;
+  display: flex;
+  justify-content: right;
+  background-color: #7da380;
   color: #333;
   line-height: 60px;
+}
+
+.el-header .name {
+  font-weight: 700;
+  margin: 0 25px;
+  font-size: 15px;
+}
+
+.el-header .header-img {
+  width: 70px;
+  border-radius: 50%;
+  margin-top: 10px;
 }
 
 .el-aside {

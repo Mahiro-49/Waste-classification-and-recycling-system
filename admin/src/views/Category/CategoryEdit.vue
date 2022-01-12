@@ -48,10 +48,12 @@ export default {
         res = await this.$http.post("rest/categories", this.model);
       }
       this.$router.push("/categories/list");
-      this.$message({
+      if(res.data !== '没有权限') {
+        this.$message({
         type: "success",
         message: "保存成功",
       });
+      }
     },
     async fetch() {
       const res = await this.$http.get(`rest/categories/${this.id}`);
