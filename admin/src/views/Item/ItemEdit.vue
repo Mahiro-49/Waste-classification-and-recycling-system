@@ -72,10 +72,12 @@ export default {
         res = await this.$http.post("rest/items", this.model);
       }
       this.$router.push("/items/list");
-      this.$message({
+      if(res.data !== '没有权限') {
+        this.$message({
         type: "success",
         message: "保存成功",
       });
+      }
     },
     async fetch() {
       const res = await this.$http.get(`rest/items/${this.id}`);
@@ -86,7 +88,6 @@ export default {
       this.parents = res.data;
     },
     afterUpload(res) {
-      console.log(res);
       this.$set(this.model, 'icon', res.url);   // 显示赋值 在model上添加icon属性
     }
   },

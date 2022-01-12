@@ -1,13 +1,13 @@
 <template>
   <div>
-    <h1>分类列表</h1>
+    <h1>价格列表</h1>
     <div class="search">
-      <el-button type="primary" @click="$router.push('/categories/create')"
-        >新建分类</el-button
-      >
+      <el-button type="primary" @click="$router.push('/goods/create')">
+        添加项目
+      </el-button>
       <div>
         <el-button type="primary" icon="el-icon-search">搜索</el-button>
-        <el-select v-model="items.name" filterable placeholder="请输入分类">
+        <el-select v-model="items.name" filterable placeholder="请输入垃圾名称">
           <el-option
             v-for="item in items"
             :key="item._id"
@@ -20,22 +20,25 @@
       </div>
     </div>
     <el-table :data="items">
-      <el-table-column align="center" type="index" label="序号" width="100">
-      </el-table-column>
+      <el-table-column type="index" align="center" label="序号" width="100"></el-table-column>
       <el-table-column
-        align="center"
-        prop="parent.name"
-        label="上级分类"
+        prop="name"
+        label="垃圾名称"
         width="auto"
+        align="center"
       ></el-table-column>
-      <el-table-column align="center" prop="name" label="分类名称" width="auto">
-      </el-table-column>
+      <el-table-column
+        prop="price"
+        label="回收价格"
+        width="auto"
+        align="center"
+      ></el-table-column>
       <el-table-column align="center" label="操作" width="auto">
         <template slot-scope="scope">
           <el-button
             type="primary"
             size="mini"
-            @click="$router.push(`/categories/edit/${scope.row._id}`)"
+            @click="$router.push(`/goods/edit/${scope.row._id}`)"
           >
             编辑
           </el-button>
@@ -45,8 +48,6 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination background layout="prev, pager, next" :total="100">
-    </el-pagination>
   </div>
 </template>
 
@@ -63,8 +64,9 @@ export default {
   },
   methods: {
     async fetch() {
-      const res = await this.$http.get("rest/categories");
+      const res = await this.$http.get("rest/goods");
       this.items = res.data;
+      console.log(this.items);
     },
     async remove(row) {
       this.$confirm(
@@ -77,7 +79,7 @@ export default {
         }
       )
         .then(async () => {
-          const res = await this.$http.delete(`rest/categories/${row._id}`);
+          const res = await this.$http.delete(`rest/goods/${row._id}`);
           if(res.data !== '没有权限') {
             this.$message({
             type: "success",
@@ -96,7 +98,7 @@ export default {
         });
     },
     goDeail(id) {
-      this.$router.push(`/categories/edit/${id}`);
+      this.$router.push(`/goods/edit/${id}`);
     },
   },
 };
@@ -107,6 +109,6 @@ export default {
   display: flex;
   justify-content: space-around;
   margin: 2rem 2rem;
+  
 }
-
 </style>

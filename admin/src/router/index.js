@@ -10,8 +10,17 @@ const CategoryList = () => import ("../views/Category/CategoryList.vue")
 const ItemList = () => import ("../views/Item/ItemList.vue")
 const ItemEdit = () => import ("../views/Item/ItemEdit.vue")
 
-const ReuseEdit = () => import ("../views/Reuse/ReuseEdit.vue")
-const ReuseList = () => import ("../views/Reuse/ReuseList.vue")
+const GoodEdit = () => import ("../views/Good/GoodEdit.vue")
+const GoodList = () => import ("../views/Good/GoodList.vue")
+
+const LocationEdit = () => import ("../views/Good/LocationEdit.vue")
+const LocationList = () => import ("../views/Good/LocationList.vue")
+
+const UserEdit = () => import ("../views/User/UserEdit.vue")
+const UserList = () => import ("../views/User/UserList.vue")
+const Personal = () => import ("../views/User/Personal.vue")
+
+const Test = () => import ("../views/test.vue")
 
 Vue.use(VueRouter)
 
@@ -33,11 +42,24 @@ const routes = [
       { path: '/items/edit/:id', component: ItemEdit, props: true },
       { path: '/items/list', component: ItemList },
       
-      { path: '/reuse/create', component: ReuseEdit },
-      { path: '/reuse/edit/:id', component: ReuseEdit, props: true },
-      { path: '/reuse/list', component: ReuseList },
+      { path: '/goods/create', component: GoodEdit },
+      { path: '/goods/edit/:id', component: GoodEdit, props: true },
+      { path: '/goods/list', component: GoodList },
+
+      { path: '/locations/create', component: LocationEdit },
+      { path: '/locations/edit/:id', component: LocationEdit, props: true },
+      { path: '/locations/list', component: LocationList },
+
+      { path: '/users/create', component: UserEdit },
+      { path: '/users/edit/:id', component: UserEdit, props: true },
+      { path: '/users/list', component: UserList },
+      { path: '/users/personal', component: Personal },
     ]
   },
+  {
+    path: '/test',
+    component: Test
+  }
 ]
 
 const router = new VueRouter({

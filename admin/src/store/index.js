@@ -3,13 +3,25 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
   state: {
+    token: null
   },
   mutations: {
+    saveToken: (state, data) => {
+      localStorage.setItem("elementToken", "Bearer " + data);
+      state.token = data;
+    },
+    removeToken: (state) => {
+      localStorage.removeItem("elementToken")
+      state.token = null
+    }
   },
-  actions: {
-  },
-  modules: {
+  getter() {
+    if(localStorage.getItem("elementToken")) {
+      state.token = localStorage.getItem("elementToken")
+    }
   }
 })
+
+export default store;

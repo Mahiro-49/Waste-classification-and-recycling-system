@@ -12,6 +12,8 @@ const UserSchema = new Schema({
     }
   },
   email: { type: String, require: true },
+  img: { type: String },
+  isAdmin: { type: String, default: '用户'}
 })
 
 const User = model('User', UserSchema)
