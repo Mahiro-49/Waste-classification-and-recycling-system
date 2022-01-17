@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 
 const Main = () => import ("../views/Main.vue")
 const Login = () => import ("../views/Login.vue")
+const Home = () => import ("../views/Home.vue")
 
 const CategoryEdit = () => import ("../views/Category/CategoryEdit.vue")
 const CategoryList = () => import ("../views/Category/CategoryList.vue")
@@ -20,8 +21,6 @@ const UserEdit = () => import ("../views/User/UserEdit.vue")
 const UserList = () => import ("../views/User/UserList.vue")
 const Personal = () => import ("../views/User/Personal.vue")
 
-const Test = () => import ("../views/test.vue")
-
 Vue.use(VueRouter)
 
 const routes = [
@@ -33,7 +32,10 @@ const routes = [
   {
     path: '/',
     component: Main,
+    redirect: '/home',
     children: [
+      {path: '/home', component: Home},
+
       { path: '/categories/create', component: CategoryEdit },
       { path: '/categories/edit/:id', component: CategoryEdit, props: true },
       { path: '/categories/list', component: CategoryList },
@@ -55,10 +57,6 @@ const routes = [
       { path: '/users/list', component: UserList },
       { path: '/users/personal', component: Personal },
     ]
-  },
-  {
-    path: '/test',
-    component: Test
   }
 ]
 

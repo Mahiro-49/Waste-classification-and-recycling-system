@@ -6,7 +6,8 @@ const Category = require('./Category');
 const ItemSchema = new Schema({
   name: { type: String },
   icon: { type: String },
-  parent: { type: mongoose.SchemaTypes.ObjectId, ref: 'Category' },
+  // parent: { type: mongoose.SchemaTypes.ObjectId, ref: 'Category' },
+  preCategory: { type: String },
   danger: { type: Number },
   reuse: { type: Number },
   tips: { type: String },

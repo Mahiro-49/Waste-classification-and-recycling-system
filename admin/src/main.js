@@ -5,9 +5,9 @@ import store from './store'
 import './plugins/element.js'
 import http from "./http"
 
+Vue.prototype.$http = http
 Vue.config.productionTip = false
 
-Vue.prototype.$http = http
 
 new Vue({
   router,

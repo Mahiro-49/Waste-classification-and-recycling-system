@@ -5,7 +5,10 @@ const GoodsSchema = new Schema({
   name: { type: String },
   price: { type: String },
   location: {type: String },
-  parent: { type: mongoose.SchemaTypes.ObjectId, ref: 'Category' },
+  iphone: { type: String },
+  time: { type: String },
+  icon: { type: String },
+  // parent: { type: mongoose.SchemaTypes.ObjectId, ref: 'Category' },
 })
 
 module.exports = model('Goods', GoodsSchema);

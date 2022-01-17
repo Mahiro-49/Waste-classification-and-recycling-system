@@ -6,9 +6,9 @@
     </div>
 
     <div class="info">
-      <el-tag align="center" type="info" effect="dark">用户名：{{items.username}}</el-tag>
-      <el-tag align="center" type="info" effect="dark">邮箱：{{items.email}}</el-tag>
-      <el-tag align="center" type="info" effect="dark">用户身份：{{items.isAdmin}}</el-tag>
+      <el-tag align="center" type="info" effect="dark">用户名：{{items.username || ''}}</el-tag>
+      <el-tag align="center" type="info" effect="dark">邮箱：{{items.email || ''}}</el-tag>
+      <el-tag align="center" type="info" effect="dark">用户身份：{{items.isAdmin || ''}}</el-tag>
       <el-button @click="$router.push(`/users/edit/${id}`)" type="success">修改个人信息</el-button>
     </div>
   </div>

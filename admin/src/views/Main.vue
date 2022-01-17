@@ -1,7 +1,12 @@
 <template>
   <el-container style="height: 100vh">
     <el-aside width="200px">
-      <el-menu router :default-openeds="['1','2' , '4']">
+      <el-menu router :default-openeds="['1','2','4']">
+        <el-menu-item index="/home">
+          <template slot="title"
+            ><i class="el-icon-message"></i>首页
+          </template>
+        </el-menu-item>
         <el-submenu index="1">
           <template slot="title"
             ><i class="el-icon-message"></i>内容管理
@@ -60,7 +65,6 @@
 
 
 <script>
-import jwtDecode from "jwt-decode";
 
 export default {
   data() {
@@ -93,8 +97,6 @@ export default {
   margin: 0;
   padding: 0;
 }
-
-
 .el-header {
   display: flex;
   justify-content: right;
@@ -110,9 +112,10 @@ export default {
 }
 
 .el-header .header-img {
-  width: 70px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
-  margin-top: 10px;
+  margin-top: 5px;
 }
 
 .el-aside {

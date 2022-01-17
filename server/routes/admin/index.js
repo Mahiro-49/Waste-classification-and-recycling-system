@@ -89,11 +89,11 @@ module.exports = app => {
   // --------->登录注册接口 结束
 
   // --------->通用CRUD接口 开始
-  router.post('/', isAdmin, async (req, res) => {
+  router.post('/', async (req, res) => {  // isAdmin
     const model = await req.Model.create(req.body)
     res.send(model)
   })
-  router.put('/:id',isAdmin,async (req, res) => {
+  router.put('/:id',async (req, res) => { // isAdmin
     const model = await req.Model.findByIdAndUpdate(req.params.id, req.body)
     res.send(model)
   })
@@ -109,7 +109,7 @@ module.exports = app => {
     const model = await req.Model.findById(req.params.id)
     res.send(model)
   })
-  router.delete('/:id',isAdmin, async (req, res) => {
+  router.delete('/:id', async (req, res) => {  // isAdmin
     await req.Model.findByIdAndDelete(req.params.id, req.body)
     res.send({ success: true })
   })
